@@ -29,6 +29,8 @@ export default async function ActivityPage() {
     },
   });
 
+  //
+
   return (
     <div className="container h-full grid grid-rows-[min-content_1fr] gap-4 pt-6 overflow-auto">
       <div className="flex flex-col gap-2">
