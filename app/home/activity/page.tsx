@@ -1,5 +1,4 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { db } from "@/lib/db";
 import { Session, getServerSession } from "next-auth";
 import { People } from "./people";
@@ -35,7 +34,7 @@ export default async function ActivityPage() {
       <div className="flex flex-col gap-2">
         <h1 className="text-3xl font-bold">Activity</h1>
       </div>
-      <ScrollArea className="h-full">
+      <div className="h-full overflow-auto">
         {dbUser.follower.map((friendship, i) => {
           return (
             <People
@@ -47,7 +46,14 @@ export default async function ActivityPage() {
             />
           );
         })}
-      </ScrollArea>
+        {dbUser.follower.length === 0 ? (
+          <p className="italic tracking-wide">
+            Nothing Ever Happens, and I wonder ...
+          </p>
+        ) : (
+          <></>
+        )}
+      </div>
     </div>
   );
 }

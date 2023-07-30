@@ -50,7 +50,7 @@ export function Header({
 
         <div className="flex gap-1 items-center">
           <p className="text-slate-500 text-xs">
-            {d().from(d(thread.createdAt))}
+            {d().from(d(thread.createdAt), true)}
           </p>
 
           {author.id === session.user.id ? (

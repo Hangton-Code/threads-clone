@@ -3,7 +3,6 @@ import { User } from "@prisma/client";
 import { People } from "./people";
 import { Session, getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default async function SearchQueryPage({
   params,
@@ -26,7 +25,7 @@ export default async function SearchQueryPage({
   const revalidate_path = `/home/search/${params.query}`;
 
   return (
-    <ScrollArea className="grid h-full">
+    <div className="h-full overflow-auto">
       {result.map((user, i) => {
         return (
           <People
@@ -37,6 +36,6 @@ export default async function SearchQueryPage({
           />
         );
       })}
-    </ScrollArea>
+    </div>
   );
 }

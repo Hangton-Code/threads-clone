@@ -1,4 +1,3 @@
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Header } from "./header";
 import { db } from "@/lib/db";
 import { ThreadComponent } from "@/components/thread/thread";
@@ -35,7 +34,7 @@ export default async function HomePage() {
   return (
     <div className="h-full grid grid-rows-[min-content_1fr] overflow-auto">
       <Header />
-      <ScrollArea className="h-full pt-1 container">
+      <div className="h-full pt-1 container overflow-auto">
         {threads.map((thread, i) => (
           <ThreadComponent
             key={i}
@@ -50,7 +49,7 @@ export default async function HomePage() {
             hyperlink={true}
           />
         ))}
-      </ScrollArea>
+      </div>
     </div>
   );
 }

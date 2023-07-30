@@ -18,7 +18,7 @@ export function ReplyTrigger({
   sessionUser: User;
 }) {
   return (
-    <div className="absolute w-full bottom-0 left-0">
+    <div className="absolute w-full bottom-0 left-0 bg-white">
       <Separator />
       <ReplyDialog
         author={author}
@@ -27,7 +27,7 @@ export function ReplyTrigger({
         sessionUser={sessionUser}
         triggerClassName="w-full"
         trigger={
-          <div className="w-full p-4">
+          <div className="w-full p-2">
             <div className="py-2 px-2.5 rounded-full w-full bg-gray-100 flex items-center gap-2">
               <Image
                 src={
@@ -38,8 +38,8 @@ export function ReplyTrigger({
                     : `/user.svg`
                 }
                 alt=""
-                width={"32"}
-                height={"32"}
+                width={"30"}
+                height={"30"}
                 className="rounded-full"
               />
               <p className="text-slate-500">Reply to {author.user_name}</p>

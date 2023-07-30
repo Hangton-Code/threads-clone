@@ -1,6 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { ThreadComponent } from "@/components/thread/thread";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { db } from "@/lib/db";
 import { Session, getServerSession } from "next-auth";
 import { Header } from "./header";
@@ -59,7 +58,7 @@ export default async function ThreadPage({
     <div className="h-full grid grid-rows-[min-content_1fr] overflow-auto relative">
       <Header />
       {/* content */}
-      <ScrollArea className="container h-full pt-1">
+      <div className="container h-full pt-1 overflow-auto pb-20">
         {/* replying to */}
         {thread.reply_to ? (
           <ThreadComponent
@@ -113,7 +112,7 @@ export default async function ThreadPage({
             hyperlink={true}
           />
         ))}
-      </ScrollArea>
+      </div>
       {/* reply trigger */}
       <ReplyTrigger
         session={session}
