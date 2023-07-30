@@ -12,6 +12,7 @@ import { ShareDialog } from "../share-dialog";
 import Link from "next/link";
 
 const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL;
 
 export function ThreadComponent({
   thread,
@@ -168,7 +169,7 @@ export function ThreadComponent({
                   </div>
                 </Button>
               }
-              url={`/home/profile/${author.id}`}
+              url={`${SITE_URL}/home/thread/${thread.id}`}
             />
           </div>
           {/* replies number & likes number */}

@@ -3,7 +3,7 @@ import { Separator } from "@/components/ui/separator";
 
 export default function PrivacyPage() {
   return (
-    <div className="py-8 flex flex-col">
+    <div className="pt-4 flex flex-col">
       <div className="flex justify-between py-1.5 px-4 items-center">
         <BackButton />
         <h1 className="font-bold">Privacy</h1>

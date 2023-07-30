@@ -20,7 +20,7 @@ export async function Profile({
           <h3 className="text-xl leading-snug font-bold">
             {user.display_name}
           </h3>
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1.5 flex-wrap">
             <p>{user.user_name}</p>
             <Badge variant={"secondary"} className="text-xs font-normal">
               {SITE_DOMAIN}

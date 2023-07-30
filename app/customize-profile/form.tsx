@@ -85,7 +85,7 @@ export function CustomizeProfileForm({
       </div>
 
       {/* submit */}
-      <Button className="w-full max-w-xs" type="submit">
+      <Button className="w-full max-w-xs" type="submit" disabled={isLoading}>
         {isLoading ? (
           <Image
             src={"/loading-bg-primary.svg"}

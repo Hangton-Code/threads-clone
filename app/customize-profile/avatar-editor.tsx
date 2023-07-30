@@ -79,7 +79,10 @@ export function AvatarEditor({
       <DropdownMenu>
         <DropdownMenuTrigger disabled={isLoading}>
           <img
-            className={cn("w-24 h-24 rounded-full object-cover object-center")}
+            className={cn(
+              "w-24 h-24 rounded-full object-cover object-center",
+              isLoading ? "opacity-80" : ""
+            )}
             src={avatarUrl || "/user.svg"}
           />
         </DropdownMenuTrigger>

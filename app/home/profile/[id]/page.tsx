@@ -36,7 +36,7 @@ export default async function ProfilePage({
     ).length > 0;
 
   return (
-    <div className="container h-full flex flex-col gap-4 pt-8 overflow-auto">
+    <div className="container h-full flex flex-col gap-4 pt-4 overflow-auto">
       {/* nav bar */}
       <NavBar user={dbUser} session={session} />
       {/* profile */}
