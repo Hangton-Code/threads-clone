@@ -19,7 +19,7 @@ export function NavBar({ unreadActivity }: { unreadActivity: boolean }) {
   };
 
   return (
-    <div className="flex justify-around py-6">
+    <div className="flex justify-around py-3">
       {/* home */}
       <Button variant="link" asChild size={"icon"}>
         <Link href={pagePath.home}>
