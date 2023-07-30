@@ -121,6 +121,13 @@ export async function Content({
             />
           );
         })}
+        {threads.length === 0 ? (
+          <p className="italic tracking-wide text-center">
+            This person has no thread yet. -.-
+          </p>
+        ) : (
+          <></>
+        )}
       </TabsContent>
       <TabsContent value="replies" className="h-full m-0 overflow-auto">
         {replies.map((thread, i) => (
@@ -156,6 +163,13 @@ export async function Content({
             />
           </div>
         ))}
+        {replies.length === 0 ? (
+          <p className="italic tracking-wide text-center">
+            This person has no reply yet. -.-
+          </p>
+        ) : (
+          <></>
+        )}
       </TabsContent>
     </Tabs>
   );

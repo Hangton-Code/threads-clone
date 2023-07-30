@@ -7,6 +7,9 @@ export default async function SearchPage() {
   const session = (await getServerSession(authOptions)) as Session;
 
   const users = await db.user.findMany({
+    where: {
+      isProfileCustomized: true,
+    },
     orderBy: {
       createdAt: "desc",
     },
