@@ -100,7 +100,7 @@ export async function Content({
                   isRepost={true}
                   reposts={thread.repost_from.reposts}
                   replied_by={thread.repost_from.replied_by}
-                  replying_to_author={thread.repost_from?.author}
+                  replying_to_author={thread.repost_from.reply_to?.author}
                   hyperlink={true}
                 />
               </div>
