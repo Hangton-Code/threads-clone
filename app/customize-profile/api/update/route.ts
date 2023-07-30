@@ -39,8 +39,11 @@ export async function POST(request: Request) {
     },
   });
 
+  // if no need to set avatar, return
+  if (!avatar_type) return NextResponse.json({});
+
   // delete old avatar file if necessary
-  if (avatar_type && dbUser.avatar_type === "File") {
+  if (dbUser.avatar_type === "File") {
     const oldAvatarPublicId = dbUser.avatar_value as string;
     await cloudinary.api.delete_resources([oldAvatarPublicId]);
   }

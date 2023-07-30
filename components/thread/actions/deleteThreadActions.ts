@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
+import cloudinary from "@/lib/cloudinary";
 
 const formSchema = z.object({
   thread_to_be_deleted_id: z.string().uuid(),
@@ -42,4 +43,9 @@ export async function deleteThreadAction(data: FormData) {
   });
 
   if (revalidate_path) revalidatePath(revalidate_path);
+
+  // delete attachment on cloudinary
+  if (dbThread.attachment) {
+    await cloudinary.api.delete_resources([dbThread.attachment]);
+  }
 }
