@@ -1,19 +1,29 @@
+import { BackButton } from "@/components/back-button";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 
 export default function SettingsPage() {
   return (
-    <div className="container h-full flex flex-col justify-between gap-4 pt-10 overflow-auto">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold">Setting</h1>
+    <div className="pt-8 flex flex-col">
+      <div>
+        <div className="flex justify-between py-1.5 px-4 items-center">
+          <BackButton />
+          <h1 className="font-bold">Privacy</h1>
+          <BackButton className="opacity-0 pointer-events-none" />
+        </div>
+        <Separator />
       </div>
-      <Button
-        className="text-red-500 hover:text-red-500 w-full"
-        variant={"outline"}
-        asChild
-      >
-        <Link href={"/signout"}>Sign Out Form This Device</Link>
-      </Button>
+      <div className="flex-grow grid grid-rows-[1fr_min-content] container">
+        <div />
+        <Button
+          className="text-red-500 hover:text-red-500 w-full"
+          variant={"outline"}
+          asChild
+        >
+          <Link href={"/signout"}>Sign Out Form This Device</Link>
+        </Button>
+      </div>
     </div>
   );
 }
