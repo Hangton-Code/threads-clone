@@ -22,7 +22,6 @@ model User {
   bio                 String       @default("")
   following           Friendship[] @relation("Following")
   follower            Friendship[] @relation("Follower")
-  isPrivateAccount    Boolean      @default(false)
   Thread              Thread[]
   Like                Like[]
 }
