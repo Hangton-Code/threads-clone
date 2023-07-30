@@ -25,7 +25,7 @@ export default function RootLayout({
             "w-screen flex justify-center bg-slate-50"
           )}
         >
-          <main className="h-full w-full max-w-md bg-white overflow-auto">
+          <main className="h-full w-full max-w-md bg-white overflow-auto md:py-2">
             {children}
           </main>
         </body>

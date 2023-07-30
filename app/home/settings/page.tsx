@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function SettingsPage() {
   return (
-    <div className="pt-4 flex flex-col">
+    <div className="pt-2 flex flex-col">
       <div>
         <div className="flex justify-between py-1.5 px-4 items-center">
           <BackButton />

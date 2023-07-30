@@ -13,7 +13,7 @@ export default async function NewPage() {
   return (
     <div className="h-full grid grid-rows-[min-content_1fr]">
       <div>
-        <h2 className="text-center py-3 font-semibold text-lg">New thread</h2>
+        <h2 className="text-center py-2 font-semibold text-lg">New thread</h2>
         <Separator />
       </div>
       <NewThreadForm user={dbUser} session={session} />
