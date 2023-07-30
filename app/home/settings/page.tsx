@@ -5,11 +5,11 @@ import Link from "next/link";
 
 export default function SettingsPage() {
   return (
-    <div className="pt-6 flex flex-col">
+    <div className="pt-4 flex flex-col">
       <div>
         <div className="flex justify-between py-1.5 px-4 items-center">
           <BackButton />
-          <h1 className="font-bold">Privacy</h1>
+          <h1 className="font-bold">Settings</h1>
           <BackButton className="opacity-0 pointer-events-none" />
         </div>
         <Separator />
