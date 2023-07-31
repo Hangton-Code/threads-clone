@@ -31,6 +31,7 @@ export function Header({
   return (
     <div>
       <div className="w-full grid grid-cols-[max-content_1fr_max-content] items-center h-min">
+        {/* user name */}
         {hyperlink ? (
           <Link
             href={`/home/profile/${author.id}`}
@@ -42,17 +43,21 @@ export function Header({
           <p className="font-medium leading-none">{author.user_name}</p>
         )}
 
+        {/* empty spaces for redirect */}
         {hyperlink ? (
           <Link href={`/home/thread/${thread.id}`} className="w-full h-full" />
         ) : (
           <div></div>
         )}
 
+        {/* dates and more menu */}
         <div className="flex gap-1 items-center">
+          {/* dates */}
           <p className="text-slate-500 text-xs">
             {d().from(d(thread.createdAt), true)}
           </p>
 
+          {/* more menu */}
           {author.id === session.user.id ? (
             <DropdownMenu>
               <DropdownMenuTrigger>
@@ -74,6 +79,7 @@ export function Header({
               <DropdownMenuContent>
                 <DropdownMenuLabel>More</DropdownMenuLabel>
                 <DropdownMenuSeparator />
+                {/* delete button */}
                 <form action={deleteThreadAction}>
                   <input
                     name="thread_to_be_deleted_id"
@@ -98,6 +104,7 @@ export function Header({
           )}
         </div>
       </div>
+      {/* user name of the author of the thread that the thread to be displayed is replying to */}
       {replying_to_author ? (
         <p className="text-slate-500 text-sm ">
           Replying to @{replying_to_author.user_name}

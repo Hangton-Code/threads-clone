@@ -5,11 +5,11 @@ import { ShareDialog } from "@/components/share-dialog";
 import { BackButton } from "@/components/back-button";
 
 export function NavBar({ user, session }: { user: User; session: Session }) {
-  if (user.id === session.user.id) return <MyNavBar user={user} />;
+  if (user.id === session.user.id) return <MyNavBar />;
   return <OthersNavBar user={user} />;
 }
 
-function MyNavBar({ user }: { user: User }) {
+function MyNavBar() {
   return (
     <div className="flex justify-between items-center">
       <Link href={"/home/privacy"}>

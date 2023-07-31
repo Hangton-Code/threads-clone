@@ -19,7 +19,7 @@ export default async function ActivityPage() {
     },
   });
 
-  // set activity status to read
+  // set activity status to have read
   await db.friendship.updateMany({
     where: {
       user_to_be_followed_id: dbUser.id,
@@ -35,23 +35,22 @@ export default async function ActivityPage() {
         <h1 className="text-3xl font-bold">Activity</h1>
       </div>
       <div className="h-full overflow-auto">
-        {dbUser.follower.map((friendship, i) => {
-          return (
-            <People
-              user={friendship.user_requested_to_follow}
-              friendship={friendship}
-              sessionUserFollowings={dbUser.following}
-              revalidate_path={`/home/activity`}
-              key={i}
-            />
-          );
-        })}
-        {dbUser.follower.length === 0 ? (
+        {dbUser.follower.length > 0 ? (
+          dbUser.follower.map((friendship, i) => {
+            return (
+              <People
+                user={friendship.user_requested_to_follow}
+                friendship={friendship}
+                sessionUserFollowings={dbUser.following}
+                revalidate_path={`/home/activity`}
+                key={i}
+              />
+            );
+          })
+        ) : (
           <p className="italic tracking-wide">
             Nothing Ever Happens, and I wonder ...
           </p>
-        ) : (
-          <></>
         )}
       </div>
     </div>

@@ -68,11 +68,7 @@ export default async function ThreadPage({
             likes={thread.reply_to.Like}
             sessionUser={sessionUser}
             isToBeReplied={true}
-            replying_to_author={
-              thread.reply_to?.reply_to
-                ? thread.reply_to?.reply_to.author
-                : undefined
-            }
+            replying_to_author={thread.reply_to?.reply_to?.author}
             revalidatePath={revalidatePath}
             reposts={thread.reply_to.reposts}
             replied_by={thread.reply_to.replied_by}

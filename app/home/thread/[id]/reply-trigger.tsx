@@ -1,10 +1,9 @@
 import { ReplyDialog } from "@/components/reply-dialog";
 import { Separator } from "@/components/ui/separator";
+import { getAvatarUrl } from "@/lib/utils";
 import { Thread, User } from "@prisma/client";
 import { Session } from "next-auth";
 import Image from "next/image";
-
-const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 
 export function ReplyTrigger({
   thread,
@@ -30,13 +29,12 @@ export function ReplyTrigger({
           <div className="w-full p-2">
             <div className="py-2 px-2.5 rounded-full w-full bg-gray-100 flex items-center gap-2">
               <Image
-                src={
-                  sessionUser.avatar_type === "File"
-                    ? `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/w_96,h_96/${sessionUser.avatar_value}`
-                    : sessionUser.avatar_type === "Url"
-                    ? (sessionUser.avatar_value as string)
-                    : `/user.svg`
-                }
+                src={getAvatarUrl({
+                  avatar_type: sessionUser.avatar_type,
+                  avatar_value: sessionUser.avatar_value,
+                  width: 30,
+                  height: 30,
+                })}
                 alt=""
                 width={"30"}
                 height={"30"}

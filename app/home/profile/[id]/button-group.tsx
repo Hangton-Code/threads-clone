@@ -8,15 +8,19 @@ import { followAction, unfollowAction } from "@/lib/followActions";
 export function ButtonGroup({
   user,
   session,
-  isFollowed,
+  isFollowing,
 }: {
   user: User;
   session: Session;
-  isFollowed: boolean;
+  isFollowing: boolean;
 }) {
   if (user.id === session.user.id) return <MyButtonGroup user={user} />;
   return (
-    <OthersButtonGroup user={user} session={session} isFollowed={isFollowed} />
+    <OthersButtonGroup
+      user={user}
+      session={session}
+      isFollowing={isFollowing}
+    />
   );
 }
 
@@ -43,13 +47,13 @@ function MyButtonGroup({ user }: { user: User }) {
 async function OthersButtonGroup({
   user,
   session,
-  isFollowed,
+  isFollowing,
 }: {
   user: User;
   session: Session;
-  isFollowed: boolean;
+  isFollowing: boolean;
 }) {
-  if (!isFollowed)
+  if (!isFollowing)
     return (
       <form className="w-full grid" action={followAction}>
         <input

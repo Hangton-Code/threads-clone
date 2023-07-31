@@ -32,3 +32,27 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Environment Variable
+
+Paste them on the `.env` file in the root folder and modify them as your preferences
+
+```
+# Prisma
+DATABASE_URL="mysql://{user}:{password}@{host}:{port}/{database_name}"
+
+# Google OAuth & Next-Auth
+GOOGLE_CLIENT_ID="{GOOGLE_OAUTH_CLIENT_ID}"
+GOOGLE_CLIENT_SECRET="{GOOGLE_OAUTH_CLIENT_SECRET}"
+NEXTAUTH_SECRET="{random_string}"
+NEXTAUTH_URL="https://localhost:3000/api/auth"
+
+# Global Variable
+NEXT_PUBLIC_SITE_URL="http://localhost:3000"
+NEXT_PUBLIC_SITE_DOMAIN="localhost:3000"
+
+# Cloudinary
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME="{CLOUDINARY_CLOUD_NAME}"
+NEXT_PUBLIC_CLOUDINARY_API_KEY="{CLOUDINARY_API_KEY}"
+CLOUDINARY_API_SECRET="{CLOUDINARY_API_SECRET}"
+```

@@ -7,7 +7,7 @@ export function ContentTabsList() {
   const router = useRouter();
   const pathname = usePathname();
 
-  // so as to remain the same tab when user refresh
+  // so as to remain the same tab when user  the page
   function changeDefaultTab(dialog: string) {
     router.push(`${pathname}?tab=${dialog}`);
   }

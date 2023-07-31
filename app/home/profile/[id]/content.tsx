@@ -58,6 +58,7 @@ export async function Content({
 
   const threads = result.filter((e) => e.reply_to_id === null);
   const replies = result.filter((e) => e.reply_to_id !== null);
+
   const revalidatePath = `/home/profile/${user.id}`;
 
   return (
@@ -86,21 +87,20 @@ export async function Content({
                       d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3"
                     />
                   </svg>
-
                   <p className="text-sm">You reposted</p>
                 </div>
 
                 <ThreadComponent
-                  thread={thread.repost_from}
-                  author={thread.repost_from.author}
                   session={session}
-                  likes={thread.repost_from.Like}
                   sessionUser={sessionUser}
                   revalidatePath={revalidatePath}
-                  isRepost={true}
+                  thread={thread.repost_from}
+                  author={thread.repost_from.author}
+                  likes={thread.repost_from.Like}
                   reposts={thread.repost_from.reposts}
                   replied_by={thread.repost_from.replied_by}
                   replying_to_author={thread.repost_from.reply_to?.author}
+                  isRepost={true}
                   hyperlink={true}
                 />
               </div>
@@ -109,12 +109,12 @@ export async function Content({
           return (
             <ThreadComponent
               key={i}
-              thread={thread}
-              author={user}
               session={session}
-              likes={thread.Like}
               sessionUser={sessionUser}
               revalidatePath={revalidatePath}
+              thread={thread}
+              author={user}
+              likes={thread.Like}
               reposts={thread.reposts}
               replied_by={thread.replied_by}
               hyperlink={true}
@@ -133,32 +133,28 @@ export async function Content({
         {replies.map((thread, i) => (
           <div key={i}>
             <ThreadComponent
+              session={session}
+              sessionUser={sessionUser}
+              revalidatePath={revalidatePath}
               thread={thread.reply_to as Thread}
               author={thread.reply_to?.author as User}
-              session={session}
               likes={thread.reply_to?.Like as Like[]}
-              sessionUser={sessionUser}
-              isToBeReplied={true}
-              replying_to_author={
-                thread.reply_to?.reply_to
-                  ? (thread.reply_to?.reply_to.author as User)
-                  : undefined
-              }
-              revalidatePath={revalidatePath}
               reposts={thread.reply_to?.reposts as Thread[]}
               replied_by={thread.reply_to?.replied_by as Thread[]}
+              isToBeReplied={true}
+              replying_to_author={thread.reply_to?.reply_to?.author}
               hyperlink={true}
             />
             <ThreadComponent
+              session={session}
+              sessionUser={sessionUser}
+              revalidatePath={revalidatePath}
               thread={thread}
               author={user}
-              session={session}
               likes={thread.Like}
-              sessionUser={sessionUser}
-              isReply={true}
-              revalidatePath={revalidatePath}
               reposts={thread.reposts}
               replied_by={thread.replied_by}
+              isReply={true}
               hyperlink={true}
             />
           </div>

@@ -13,12 +13,15 @@ export default async function ProfilePage({
   params: { id: string };
   searchParams: { tab: string };
 }) {
+  // session
   const session = (await getServerSession(authOptions)) as Session;
   const sessionUser = await db.user.findFirstOrThrow({
     where: {
       id: session.user.id,
     },
   });
+
+  // data of the user the page refers to
   const dbUser = await db.user.findFirstOrThrow({
     where: {
       id: params.id,
@@ -30,7 +33,7 @@ export default async function ProfilePage({
 
   const defaultTab = searchParams.tab || "threads";
 
-  const isFollowed =
+  const isFollowing =
     dbUser.follower.filter(
       (e) => e.user_requested_to_follow_id === sessionUser.id
     ).length > 0;
@@ -42,7 +45,7 @@ export default async function ProfilePage({
       {/* profile */}
       <Profile user={dbUser} followers={dbUser.follower} />
       {/* button group */}
-      <ButtonGroup user={dbUser} session={session} isFollowed={isFollowed} />
+      <ButtonGroup user={dbUser} session={session} isFollowing={isFollowing} />
       {/* content */}
       <Content
         user={dbUser}

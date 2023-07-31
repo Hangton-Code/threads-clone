@@ -1,6 +1,7 @@
 import { Friendship, User } from "@prisma/client";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
+import { getAvatarUrl } from "@/lib/utils";
 
 const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 const SITE_DOMAIN = process.env.NEXT_PUBLIC_SITE_DOMAIN;
@@ -17,9 +18,11 @@ export async function Profile({
       <div className="flex justify-between items-center">
         {/* names */}
         <div>
+          {/* display name */}
           <h3 className="text-xl leading-snug font-bold">
             {user.display_name}
           </h3>
+          {/* user name */}
           <div className="flex items-center gap-1.5 flex-wrap">
             <p>{user.user_name}</p>
             <Badge variant={"secondary"} className="text-xs font-normal">
@@ -29,19 +32,19 @@ export async function Profile({
         </div>
         {/* avatar */}
         <Image
-          src={
-            user.avatar_type === "File"
-              ? `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/w_96,h_96/${user.avatar_value}`
-              : user.avatar_type === "Url"
-              ? (user.avatar_value as string)
-              : `/user.svg`
-          }
+          src={getAvatarUrl({
+            avatar_type: user.avatar_type,
+            avatar_value: user.avatar_value,
+            width: 60,
+            height: 60,
+          })}
           alt=""
           width={"60"}
           height={"60"}
           className="rounded-full object-center object-cover"
         />
       </div>
+      {/* bio */}
       <p className="leading-snug whitespace-pre-line">{user.bio}</p>
       {/* followers number */}
       {followers.length > 0 ? (

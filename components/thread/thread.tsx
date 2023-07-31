@@ -15,23 +15,32 @@ import Image from "next/image";
 const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL;
 
+// isReply: a thread that replied to another thread
+// isToBeReplied: the thread that was replied by the thread to be displayed
+// isRepost: the thread that was reposted by the user to be displayed
+
+// reposts: repost-type threads of the thread to be displayed
+// replied_by: reply-type threads of the thread to be displayed
+// replying_to_author: the author of the thread that the thread to be displayed is replying to
+
 export function ThreadComponent({
+  session,
+  sessionUser,
+  revalidatePath,
   thread,
   author,
-  session,
   likes,
-  sessionUser,
-  isReply,
-  isToBeReplied,
-  revalidatePath,
-  isRepost,
   reposts,
   replied_by,
   replying_to_author,
+  isReply,
+  isToBeReplied,
+  isRepost,
   hyperlink,
 }: {
   session: Session;
   sessionUser: User;
+  revalidatePath: string;
   thread: Thread;
   author: User;
   likes: Like[];
@@ -42,7 +51,6 @@ export function ThreadComponent({
   isToBeReplied?: boolean;
   isRepost?: boolean;
   hyperlink?: boolean;
-  revalidatePath: string;
 }) {
   return (
     <div>

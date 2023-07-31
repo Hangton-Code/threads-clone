@@ -4,6 +4,8 @@ import { ThreadComponent } from "@/components/thread/thread";
 import { Session, getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
+const revalidatePath = "/home";
+
 export default async function HomePage() {
   const session = (await getServerSession(authOptions)) as Session;
   const sessionUser = await db.user.findFirstOrThrow({
@@ -28,8 +30,6 @@ export default async function HomePage() {
       createdAt: "desc",
     },
   });
-
-  const revalidatePath = "/home";
 
   return (
     <div className="h-full grid grid-rows-[min-content_1fr] overflow-auto">
