@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { NavBar } from "./nav-bar";
-import { getServerSession } from "next-auth";
+import { Session, getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
@@ -10,12 +10,10 @@ export default async function HomeLayout({
 }: {
   children: ReactNode;
 }) {
-  const session = await getServerSession(authOptions);
-  if (!session) redirect("/signin");
-  const id = session?.user.id;
+  const session = (await getServerSession(authOptions)) as Session;
   const dbUser = await db.user.findFirstOrThrow({
     where: {
-      id,
+      id: session?.user.id,
     },
     include: {
       follower: true,
