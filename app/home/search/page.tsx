@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { People } from "./[query]/people";
+import { People } from "./people";
 import { Session, getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 

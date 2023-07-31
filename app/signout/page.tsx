@@ -1,8 +1,7 @@
 import { getServerSession } from "next-auth";
-import { SignOutButton } from "./signOutButton";
+import { SignOutButton } from "./sign-out-button";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Tooltip,
   TooltipContent,
@@ -10,9 +9,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { db } from "@/lib/db";
+import { UserAvatar } from "@/components/user-avatar";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL;
-const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 
 export default async function SignOutPage() {
   const session = await getServerSession(authOptions);
@@ -34,19 +33,11 @@ export default async function SignOutPage() {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Avatar className="absolute right-0 top-0">
-                <AvatarImage
-                  src={
-                    dbUser.avatar_type === "File"
-                      ? `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/w_96,h_96/${dbUser.avatar_value}`
-                      : dbUser.avatar_type === "Url"
-                      ? (dbUser.avatar_value as string)
-                      : `/user.svg`
-                  }
-                  alt=""
-                />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
+              <UserAvatar
+                className="absolute right-0 top-0"
+                avatar_type={dbUser.avatar_type}
+                avatar_value={dbUser.avatar_value}
+              />
             </TooltipTrigger>
             <TooltipContent>
               <p>{session.user.email}</p>

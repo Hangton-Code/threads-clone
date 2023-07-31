@@ -12,7 +12,7 @@ export function Header() {
             window.location.reload();
           }}
         >
-          <Image src={"/threads_logo.png"} alt="" width={36} height={36} />
+          <Image src={"/threads-logo.png"} alt="" width={36} height={36} />
         </button>
       </div>
       <Separator />

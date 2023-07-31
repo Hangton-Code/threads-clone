@@ -7,13 +7,13 @@ const CLOUDINARY_CLOUD_NAME = process.env
 const CLOUDINARY_API_KEY = process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY as string;
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL;
 
-export function replayDialogUseSubmit(
-  thread: Thread,
+export function useSubmit(
   content: string,
   attachment: File | null,
   setIsLoading: Dispatch<SetStateAction<boolean>>,
   setError: Dispatch<SetStateAction<string>>,
-  session: Session
+  session: Session,
+  reply_to?: Thread
 ) {
   const handler = async (e: FormEvent<HTMLFormElement>) => {
     try {
@@ -26,12 +26,12 @@ export function replayDialogUseSubmit(
       }
 
       // upload to server
-      const res = await fetch("/home/new/api/create", {
+      const res = await fetch("/api/thread/new", {
         method: "POST",
         body: JSON.stringify({
           content,
           with_attachment: !!attachment,
-          reply_to_id: thread.id,
+          reply_to_id: reply_to?.id || undefined,
         }),
       });
 
@@ -61,7 +61,9 @@ export function replayDialogUseSubmit(
         );
       }
 
-      window.location.href = `${SITE_URL}/home/thread/${thread.id}`;
+      if (reply_to)
+        window.location.href = `${SITE_URL}/home/thread/${reply_to.id}`;
+      else window.location.href = `${SITE_URL}/home/profile/${session.user.id}`;
     } catch (e) {
       if (e instanceof Error) {
         setError(e.message);

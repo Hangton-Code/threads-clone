@@ -20,7 +20,7 @@ export function SignInButton() {
   return (
     <Button variant={"outline"} onClick={handler}>
       <Image
-        src="/google_logo.svg"
+        src="/google-logo.svg"
         alt=""
         width={22}
         height={22}

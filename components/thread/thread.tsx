@@ -1,4 +1,3 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Like, Thread, User } from "@prisma/client";
 import { Separator } from "@/components/ui/separator";
 import { Session } from "next-auth";
@@ -10,6 +9,8 @@ import { LikeButton } from "./like-button";
 import { RepostButton } from "./repost-button";
 import { ShareDialog } from "../share-dialog";
 import Link from "next/link";
+import { UserAvatar } from "../user-avatar";
+import Image from "next/image";
 
 const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL;
@@ -29,56 +30,46 @@ export function ThreadComponent({
   replying_to_author,
   hyperlink,
 }: {
+  session: Session;
+  sessionUser: User;
   thread: Thread;
   author: User;
-  session: Session;
   likes: Like[];
-  sessionUser: User;
-  isReply?: boolean;
-  isToBeReplied?: boolean;
-  revalidatePath: string;
-  isRepost?: boolean;
   reposts: Thread[];
   replied_by: Thread[];
   replying_to_author?: User;
+  isReply?: boolean;
+  isToBeReplied?: boolean;
+  isRepost?: boolean;
   hyperlink?: boolean;
+  revalidatePath: string;
 }) {
   return (
     <div>
       <div
         className={cn(
-          "grid grid-cols-[min-content_1fr] gap-3",
-          isToBeReplied
-            ? "pt-4"
-            : isRepost
-            ? "pb-4 pt-2"
-            : isReply
-            ? "py-3"
-            : "py-4"
+          "grid grid-cols-[min-content_1fr] gap-3 py-4",
+          isToBeReplied ? "pt-4 pb-0" : "",
+          isRepost ? "pt-2 pb-4" : "",
+          isReply ? "py-3" : ""
         )}
       >
         {/* avatar & a string dropping down */}
         <div className="grid grid-rows-[min-content_1fr] gap-2">
-          <Avatar>
-            <AvatarImage
-              src={
-                author.avatar_type === "File"
-                  ? `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/w_96,h_96/${author.avatar_value}`
-                  : author.avatar_type === "Url"
-                  ? (author.avatar_value as string)
-                  : `/user.svg`
-              }
-            />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
+          <UserAvatar
+            avatar_type={author.avatar_type}
+            avatar_value={author.avatar_value}
+          />
           {isReply ? (
             <></>
           ) : (
             <div className="h-full w-[2px] bg-slate-100 mx-auto" />
           )}
         </div>
+
         {/* names & conent & attachment & buttons group & replies & likes */}
         <div className="w-full grid gap-1">
+          {/* name */}
           <Header
             author={author}
             thread={thread}
@@ -87,6 +78,7 @@ export function ThreadComponent({
             revalidatePath={revalidatePath}
             hyperlink={hyperlink}
           />
+
           {/* content */}
           {hyperlink ? (
             <Link href={`/home/thread/${thread.id}`}>
@@ -100,14 +92,17 @@ export function ThreadComponent({
 
           {/* attachment */}
           {thread.attachment ? (
-            <img
-              src={`https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/w_iw,h_ih/${thread.attachment}`}
+            <Image
+              src={`https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,w_332/${thread.attachment}`}
               alt=""
               className="w-full max-h-[360px] rounded-md object-cover object-center"
+              width={332}
+              height={360}
             />
           ) : (
             <></>
           )}
+
           {/* button group */}
           <div className="flex">
             <LikeButton
@@ -172,6 +167,7 @@ export function ThreadComponent({
               url={`${SITE_URL}/home/thread/${thread.id}`}
             />
           </div>
+
           {/* replies number & likes number */}
           {replied_by.length > 0 || likes.length > 0 ? (
             <p className="text-slate-500 text-sm">

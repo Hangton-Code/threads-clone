@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Session } from "next-auth";
+import Image from "next/image";
 
 type Prop = {
   avatar: string | File | null;
@@ -36,13 +37,6 @@ export function AvatarEditor({
     avatar as string | null
   );
 
-  // obtain picture from google provider
-  const googleAvatar = session.user.image as string;
-
-  function choosePictureTrigger() {
-    fileInputRef.current?.click();
-  }
-
   async function pictureChosenHandler(e: ChangeEvent<HTMLInputElement>) {
     if (!e.target.files) return;
 
@@ -59,8 +53,8 @@ export function AvatarEditor({
   }
 
   function importFromGoogleHandler() {
-    setAvatar(googleAvatar);
-    setAvatarUrl(googleAvatar);
+    setAvatar(session.user.image as string);
+    setAvatarUrl(session.user.image as string);
 
     // mark changes
     setIsAvatarChanged(true);
@@ -78,18 +72,26 @@ export function AvatarEditor({
     <>
       <DropdownMenu>
         <DropdownMenuTrigger disabled={isLoading}>
-          <img
+          <Image
             className={cn(
-              "w-24 h-24 rounded-full object-cover object-center",
+              "aspect-square rounded-full object-cover object-center",
               isLoading ? "opacity-80" : ""
             )}
             src={avatarUrl || "/user.svg"}
+            alt=""
+            width={96}
+            height={96}
           />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>Avatar</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={choosePictureTrigger} disabled={isLoading}>
+          <DropdownMenuItem
+            onClick={() => {
+              fileInputRef.current?.click();
+            }}
+            disabled={isLoading}
+          >
             Choose a picture
           </DropdownMenuItem>
           <DropdownMenuItem

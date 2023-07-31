@@ -4,12 +4,13 @@ import { useState } from "react";
 import { AvatarEditor } from "./avatar-editor";
 import { NameEditor } from "./name-editor";
 import { Button } from "@/components/ui/button";
-import { useSubmit } from "./useSubmit";
+import { useSubmit } from "./use-submit";
 import { Session } from "next-auth";
 import { User } from "@prisma/client";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
+import { getAvatarUrl } from "@/lib/utils";
 
 const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 
@@ -23,9 +24,13 @@ export function CustomizeProfileForm({
   const [isAvatarChanged, setIsAvatarChanged] = useState(false);
   const [avatar, setAvatar] = useState<File | string | null>(
     user.isProfileCustomized
-      ? user.avatar_type === "File"
-        ? `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/w_96,h_96/${user.avatar_value}`
-        : user.avatar_value
+      ? getAvatarUrl({
+          avatar_type: user.avatar_type,
+          avatar_value: user.avatar_value,
+          width: 96,
+          height: 96,
+          defaultValue: null,
+        })
       : null
   );
   const [displayName, setDisplayName] = useState(
