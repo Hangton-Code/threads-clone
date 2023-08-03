@@ -1,27 +1,28 @@
-import { Like, Thread } from "@prisma/client";
-import { Session } from "next-auth";
+import { Like, Thread, User } from "@prisma/client";
 import { likeThreadAction, unlikeThreadAction } from "./actions/likeActions";
 import { Button } from "@/components/ui/button";
+
+type Prop = {
+  thread: Thread;
+  likes: Like[];
+  sessionUser: User;
+  revalidate_path: string;
+};
 
 export function LikeButton({
   thread,
   likes,
-  session,
-  revalidatePath,
-}: {
-  thread: Thread;
-  likes: Like[];
-  session: Session;
-  revalidatePath: string;
-}) {
-  const isLiked = likes.filter((e) => e.user_id === session.user.id).length > 0;
+  sessionUser,
+  revalidate_path,
+}: Prop) {
+  const isLiked = likes.filter((e) => e.user_id === sessionUser.id).length > 0;
 
   if (isLiked)
     return (
       <form action={unlikeThreadAction}>
         <input
           className="hidden"
-          defaultValue={revalidatePath}
+          defaultValue={revalidate_path}
           name="revalidate_path"
         />
         <input
@@ -46,7 +47,7 @@ export function LikeButton({
     <form action={likeThreadAction}>
       <input
         className="hidden"
-        defaultValue={revalidatePath}
+        defaultValue={revalidate_path}
         name="revalidate_path"
       />
       <input

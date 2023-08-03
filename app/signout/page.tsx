@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/tooltip";
 import { db } from "@/lib/db";
 import { UserAvatar } from "@/components/user-avatar";
+import { BackButton } from "@/components/back-button";
+import Image from "next/image";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL;
 
@@ -29,6 +31,7 @@ export default async function SignOutPage() {
   return (
     <div className="container h-full grid grid-rows-[1fr_min-content] py-8 ">
       <div className="flex flex-col justify-center items-center relative">
+        <BackButton className="absolute top-0 left-0" />
         {/* avatar */}
         <TooltipProvider>
           <Tooltip>
@@ -46,7 +49,7 @@ export default async function SignOutPage() {
         </TooltipProvider>
 
         {/* content */}
-        <img src={"/threads_logo.png"} alt="" />
+        <Image src={"/threads-logo.png"} width={135} height={135} alt="" />
         <p className="mt-4 text-2xl font-semibold">
           Confirm to <span className="text-red-500">Sign Out</span>?
         </p>

@@ -1,24 +1,24 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Friendship, User } from "@prisma/client";
 import Link from "next/link";
 import { followAction, unfollowAction } from "@/lib/followActions";
 import d from "@/lib/dayjs";
+import { UserAvatar } from "@/components/user-avatar";
 
-const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+type Prop = {
+  user: User;
+  sessionUserFollowings: Friendship[];
+  revalidate_path: string;
+  friendship: Friendship;
+};
 
 export function People({
   user,
   sessionUserFollowings,
   revalidate_path,
   friendship,
-}: {
-  user: User;
-  sessionUserFollowings: Friendship[];
-  revalidate_path: string;
-  friendship: Friendship;
-}) {
+}: Prop) {
   const isFollowing =
     sessionUserFollowings.filter((e) => e.user_to_be_followed_id === user.id)
       .length > 0;
@@ -26,18 +26,10 @@ export function People({
   return (
     <div className="grid grid-cols-[min-content_1fr] gap-3 mt-4">
       {/* avatar */}
-      <Avatar>
-        <AvatarImage
-          src={
-            user.avatar_type === "File"
-              ? `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/w_96,h_96/${user.avatar_value}`
-              : user.avatar_type === "Url"
-              ? (user.avatar_value as string)
-              : `/user.svg`
-          }
-        />
-        <AvatarFallback>CN</AvatarFallback>
-      </Avatar>
+      <UserAvatar
+        avatar_type={user.avatar_type}
+        avatar_value={user.avatar_value}
+      />
       <div>
         {/* names and follow button */}
         <div className="grid grid-cols-[1fr_min-content]">

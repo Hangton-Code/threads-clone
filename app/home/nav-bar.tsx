@@ -1,20 +1,24 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useSession } from "next-auth/react";
+import { User } from "@prisma/client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export function NavBar({ unreadActivity }: { unreadActivity: boolean }) {
+type Prop = {
+  user: User;
+  unreadActivity: boolean;
+};
+
+export function NavBar({ unreadActivity, user }: Prop) {
   const pathname = usePathname();
-  const { data: session } = useSession();
 
   const pagePath = {
     home: "/home",
     search: "/home/search",
     new: "/home/new",
     activity: "/home/activity",
-    profile: session ? `/home/profile/${session?.user.id}` : "/",
+    profile: `/home/profile/${user.id}`,
   };
 
   return (

@@ -4,11 +4,10 @@ import { People } from "../people";
 import { Session, getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-export default async function SearchQueryPage({
-  params,
-}: {
+type Prop = {
   params: { query: string };
-}) {
+};
+export default async function SearchQueryPage({ params }: Prop) {
   const session = (await getServerSession(authOptions)) as Session;
 
   const result = await db.$queryRaw<

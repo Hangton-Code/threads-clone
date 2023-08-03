@@ -2,27 +2,21 @@ import { ReplyDialog } from "@/components/reply-dialog";
 import { Separator } from "@/components/ui/separator";
 import { getAvatarUrl } from "@/lib/utils";
 import { Thread, User } from "@prisma/client";
-import { Session } from "next-auth";
 import Image from "next/image";
 
-export function ReplyTrigger({
-  thread,
-  author,
-  session,
-  sessionUser,
-}: {
+type Prop = {
   thread: Thread;
   author: User;
-  session: Session;
   sessionUser: User;
-}) {
+};
+
+export function ReplyTrigger({ thread, author, sessionUser }: Prop) {
   return (
     <div className="absolute w-full bottom-0 left-0 bg-white">
       <Separator />
       <ReplyDialog
         author={author}
         thread={thread}
-        session={session}
         sessionUser={sessionUser}
         triggerClassName="w-full"
         trigger={

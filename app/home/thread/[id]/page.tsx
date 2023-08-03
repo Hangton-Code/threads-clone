@@ -5,11 +5,11 @@ import { Session, getServerSession } from "next-auth";
 import { Header } from "./header";
 import { ReplyTrigger } from "./reply-trigger";
 
-export default async function ThreadPage({
-  params,
-}: {
+type Prop = {
   params: { id: string };
-}) {
+};
+
+export default async function ThreadPage({ params }: Prop) {
   const thread = await db.thread.findFirstOrThrow({
     where: {
       id: params.id,
@@ -52,7 +52,7 @@ export default async function ThreadPage({
     },
   });
 
-  const revalidatePath = `/home/thread/${params.id}`;
+  const revalidate_path = `/home/thread/${params.id}`;
 
   return (
     <div className="h-full grid grid-rows-[min-content_1fr] overflow-auto relative">
@@ -64,12 +64,11 @@ export default async function ThreadPage({
           <ThreadComponent
             thread={thread.reply_to}
             author={thread.reply_to.author}
-            session={session}
             likes={thread.reply_to.Like}
             sessionUser={sessionUser}
             isToBeReplied={true}
             replying_to_author={thread.reply_to?.reply_to?.author}
-            revalidatePath={revalidatePath}
+            revalidate_path={revalidate_path}
             reposts={thread.reply_to.reposts}
             replied_by={thread.reply_to.replied_by}
             hyperlink={true}
@@ -81,10 +80,9 @@ export default async function ThreadPage({
         <ThreadComponent
           thread={thread}
           author={thread.author}
-          session={session}
           likes={thread.Like}
           sessionUser={sessionUser}
-          revalidatePath={revalidatePath}
+          revalidate_path={revalidate_path}
           reposts={thread.reposts}
           replied_by={thread.replied_by}
           isReply={!!thread.reply_to}
@@ -98,10 +96,9 @@ export default async function ThreadPage({
             key={i}
             thread={replies}
             author={replies.author}
-            session={session}
             likes={replies.Like}
             sessionUser={sessionUser}
-            revalidatePath={revalidatePath}
+            revalidate_path={revalidate_path}
             reposts={replies.reposts}
             replied_by={replies.replied_by}
             isReply={true}
@@ -111,7 +108,6 @@ export default async function ThreadPage({
       </div>
       {/* reply trigger */}
       <ReplyTrigger
-        session={session}
         sessionUser={sessionUser}
         author={thread.author}
         thread={thread}

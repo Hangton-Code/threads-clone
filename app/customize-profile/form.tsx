@@ -12,15 +12,12 @@ import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import { getAvatarUrl } from "@/lib/utils";
 
-const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-
-export function CustomizeProfileForm({
-  user,
-  session,
-}: {
+type Prop = {
   user: User;
   session: Session;
-}) {
+};
+
+export function CustomizeProfileForm({ user, session }: Prop) {
   const [isAvatarChanged, setIsAvatarChanged] = useState(false);
   const [avatar, setAvatar] = useState<File | string | null>(
     user.isProfileCustomized

@@ -11,13 +11,12 @@ import {
 } from "@/components/ui/dialog";
 import { ReactNode } from "react";
 
-export function ShareDialog({
-  trigger,
-  url,
-}: {
+type Prop = {
   trigger: ReactNode;
   url: string;
-}) {
+};
+
+export function ShareDialog({ trigger, url }: Prop) {
   function copyLinkHandler() {
     navigator.clipboard.writeText(url);
   }

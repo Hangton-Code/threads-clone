@@ -1,6 +1,5 @@
 import d from "@/lib/dayjs";
 import { Thread, User } from "@prisma/client";
-import { Session } from "next-auth";
 
 import {
   DropdownMenu,
@@ -13,21 +12,23 @@ import {
 import { deleteThreadAction } from "./actions/deleteThreadActions";
 import Link from "next/link";
 
+type Prop = {
+  thread: Thread;
+  author: User;
+  sessionUser: User;
+  replying_to_author?: User;
+  revalidate_path: string;
+  hyperlink?: boolean;
+};
+
 export function Header({
   thread,
   author,
-  session,
+  sessionUser,
   replying_to_author,
-  revalidatePath,
+  revalidate_path,
   hyperlink,
-}: {
-  thread: Thread;
-  author: User;
-  session: Session;
-  replying_to_author?: User;
-  revalidatePath: string;
-  hyperlink?: boolean;
-}) {
+}: Prop) {
   return (
     <div>
       <div className="w-full grid grid-cols-[max-content_1fr_max-content] items-center h-min">
@@ -58,7 +59,7 @@ export function Header({
           </p>
 
           {/* more menu */}
-          {author.id === session.user.id ? (
+          {author.id === sessionUser.id ? (
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <svg
@@ -88,7 +89,7 @@ export function Header({
                   />
                   <input
                     name="revalidate_path"
-                    defaultValue={revalidatePath}
+                    defaultValue={revalidate_path}
                     className="hidden"
                   />
                   <button type="submit" className="block p-0 w-full">

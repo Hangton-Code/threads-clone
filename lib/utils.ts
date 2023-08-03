@@ -35,7 +35,7 @@ export const getAvatarUrl = ({
   if (avatar_type === "File") {
     return `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/w_${
       width?.toString() || "40"
-    },h_${height?.toString() || "40"}/${avatar_value}`;
+    },h_${height?.toString() || "40"},c_fill/${avatar_value}`;
   }
   if (avatar_type === "Url") {
     return avatar_value as string;

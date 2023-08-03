@@ -2,20 +2,15 @@ import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { ThreadComponent } from "@/components/thread/thread";
 import { db } from "@/lib/db";
 import { Like, Thread, User } from "@prisma/client";
-import { Session } from "next-auth";
 import { ContentTabsList } from "./content-tabs-list";
 
-export async function Content({
-  user,
-  session,
-  sessionUser,
-  defaultTab,
-}: {
+type Prop = {
   user: User;
-  session: Session;
   sessionUser: User;
   defaultTab: string;
-}) {
+};
+
+export async function Content({ user, sessionUser, defaultTab }: Prop) {
   const result = await db.thread.findMany({
     where: {
       author_id: user.id,
@@ -59,7 +54,7 @@ export async function Content({
   const threads = result.filter((e) => e.reply_to_id === null);
   const replies = result.filter((e) => e.reply_to_id !== null);
 
-  const revalidatePath = `/home/profile/${user.id}`;
+  const revalidate_path = `/home/profile/${user.id}`;
 
   return (
     <Tabs
@@ -91,9 +86,8 @@ export async function Content({
                 </div>
 
                 <ThreadComponent
-                  session={session}
                   sessionUser={sessionUser}
-                  revalidatePath={revalidatePath}
+                  revalidate_path={revalidate_path}
                   thread={thread.repost_from}
                   author={thread.repost_from.author}
                   likes={thread.repost_from.Like}
@@ -109,9 +103,8 @@ export async function Content({
           return (
             <ThreadComponent
               key={i}
-              session={session}
               sessionUser={sessionUser}
-              revalidatePath={revalidatePath}
+              revalidate_path={revalidate_path}
               thread={thread}
               author={user}
               likes={thread.Like}
@@ -133,9 +126,8 @@ export async function Content({
         {replies.map((thread, i) => (
           <div key={i}>
             <ThreadComponent
-              session={session}
               sessionUser={sessionUser}
-              revalidatePath={revalidatePath}
+              revalidate_path={revalidate_path}
               thread={thread.reply_to as Thread}
               author={thread.reply_to?.author as User}
               likes={thread.reply_to?.Like as Like[]}
@@ -146,9 +138,8 @@ export async function Content({
               hyperlink={true}
             />
             <ThreadComponent
-              session={session}
               sessionUser={sessionUser}
-              revalidatePath={revalidatePath}
+              revalidate_path={revalidate_path}
               thread={thread}
               author={user}
               likes={thread.Like}

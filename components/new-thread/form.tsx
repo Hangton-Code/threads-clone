@@ -3,25 +3,19 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Thread, User } from "@prisma/client";
-import { ChangeEvent, useRef, useState } from "react";
+import { useState } from "react";
 import { useSubmit } from "./use-submit";
-import { Session } from "next-auth";
-import { convertFileToBase64Url } from "@/lib/utils";
 import Image from "next/image";
 import { UserAvatar } from "@/components/user-avatar";
 import { AttachmentEditor } from "./attachment-editor";
 
-export function NewThreadForm({
-  user,
-  session,
-  reply_to,
-  reply_to_author,
-}: {
+type Prop = {
   user: User;
-  session: Session;
   reply_to?: Thread;
   reply_to_author?: User;
-}) {
+};
+
+export function NewThreadForm({ user, reply_to, reply_to_author }: Prop) {
   // file input ref
   const [content, setContent] = useState("");
   const [attachment, setAttachment] = useState<File | null>(null);
@@ -33,7 +27,7 @@ export function NewThreadForm({
     attachment,
     setIsLoading,
     setError,
-    session,
+    user,
     reply_to
   );
 

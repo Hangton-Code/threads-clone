@@ -23,24 +23,9 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL;
 // replied_by: reply-type threads of the thread to be displayed
 // replying_to_author: the author of the thread that the thread to be displayed is replying to
 
-export function ThreadComponent({
-  session,
-  sessionUser,
-  revalidatePath,
-  thread,
-  author,
-  likes,
-  reposts,
-  replied_by,
-  replying_to_author,
-  isReply,
-  isToBeReplied,
-  isRepost,
-  hyperlink,
-}: {
-  session: Session;
+type Prop = {
   sessionUser: User;
-  revalidatePath: string;
+  revalidate_path: string;
   thread: Thread;
   author: User;
   likes: Like[];
@@ -51,7 +36,22 @@ export function ThreadComponent({
   isToBeReplied?: boolean;
   isRepost?: boolean;
   hyperlink?: boolean;
-}) {
+};
+
+export function ThreadComponent({
+  sessionUser,
+  revalidate_path,
+  thread,
+  author,
+  likes,
+  reposts,
+  replied_by,
+  replying_to_author,
+  isReply,
+  isToBeReplied,
+  isRepost,
+  hyperlink,
+}: Prop) {
   return (
     <div>
       <div
@@ -81,9 +81,9 @@ export function ThreadComponent({
           <Header
             author={author}
             thread={thread}
-            session={session}
+            sessionUser={sessionUser}
             replying_to_author={replying_to_author}
-            revalidatePath={revalidatePath}
+            revalidate_path={revalidate_path}
             hyperlink={hyperlink}
           />
 
@@ -115,13 +115,12 @@ export function ThreadComponent({
           <div className="flex">
             <LikeButton
               thread={thread}
-              session={session}
+              sessionUser={sessionUser}
               likes={likes}
-              revalidatePath={revalidatePath}
+              revalidate_path={revalidate_path}
             />
             <ReplyDialog
               thread={thread}
-              session={session}
               author={author}
               sessionUser={sessionUser}
               trigger={
@@ -146,10 +145,10 @@ export function ThreadComponent({
               }
             />
             <RepostButton
-              revalidatePath={revalidatePath}
+              revalidate_path={revalidate_path}
               thread={thread}
               reposts={reposts}
-              session={session}
+              sessionUser={sessionUser}
             />
             <ShareDialog
               trigger={

@@ -17,7 +17,7 @@ export default async function NewPage() {
         <Separator />
       </div>
       <div className="container pt-8">
-        <NewThreadForm user={dbUser} session={session} />
+        <NewThreadForm user={dbUser} />
       </div>
     </div>
   );

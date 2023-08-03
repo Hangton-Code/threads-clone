@@ -5,7 +5,9 @@ import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import clsx from "clsx";
 
-export function BackButton({ className }: { className?: clsx.ClassValue }) {
+type Prop = { className?: clsx.ClassValue };
+
+export function BackButton({ className }: Prop) {
   const router = useRouter();
 
   function backButtonHandler() {

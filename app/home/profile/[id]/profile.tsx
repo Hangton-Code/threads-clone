@@ -3,16 +3,14 @@ import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { getAvatarUrl } from "@/lib/utils";
 
-const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 const SITE_DOMAIN = process.env.NEXT_PUBLIC_SITE_DOMAIN;
 
-export async function Profile({
-  user,
-  followers,
-}: {
+type Prop = {
   user: User;
   followers: Friendship[];
-}) {
+};
+
+export async function Profile({ user, followers }: Prop) {
   return (
     <div className="flex flex-col gap-3">
       <div className="flex justify-between items-center">

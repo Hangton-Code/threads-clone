@@ -4,24 +4,25 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Thread } from "@prisma/client";
-import { Session } from "next-auth";
+import { Thread, User } from "@prisma/client";
 import { removeRepostAction, repostAction } from "./actions/repostActions";
 import { Button } from "../ui/button";
 
+type Prop = {
+  thread: Thread;
+  revalidate_path: string;
+  reposts: Thread[];
+  sessionUser: User;
+};
+
 export function RepostButton({
   thread,
-  revalidatePath,
+  revalidate_path,
   reposts,
-  session,
-}: {
-  thread: Thread;
-  revalidatePath: string;
-  reposts: Thread[];
-  session: Session;
-}) {
+  sessionUser,
+}: Prop) {
   const isReposted =
-    reposts.filter((e) => e.author_id === session.user.id).length > 0;
+    reposts.filter((e) => e.author_id === sessionUser.id).length > 0;
 
   if (isReposted)
     return (
@@ -60,7 +61,7 @@ export function RepostButton({
             <input
               name="revalidate_path"
               className="hidden"
-              defaultValue={revalidatePath}
+              defaultValue={revalidate_path}
             />
             <button type="submit" className="block p-0 w-full">
               <DropdownMenuItem className="text-red-500">
@@ -102,7 +103,7 @@ export function RepostButton({
           <input
             name="revalidate_path"
             className="hidden"
-            defaultValue={revalidatePath}
+            defaultValue={revalidate_path}
           />
           <button type="submit" className="block p-0 w-full">
             <DropdownMenuItem>Repost</DropdownMenuItem>

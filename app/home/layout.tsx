@@ -28,7 +28,7 @@ export default async function HomeLayout({
   return (
     <div className="h-full grid grid-rows-[1fr_min-content] overflow-auto">
       {children}
-      <NavBar unreadActivity={unreadActivity} />
+      <NavBar unreadActivity={unreadActivity} user={dbUser} />
     </div>
   );
 }

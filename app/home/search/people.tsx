@@ -5,15 +5,13 @@ import Link from "next/link";
 import { followAction, unfollowAction } from "@/lib/followActions";
 import { UserAvatar } from "@/components/user-avatar";
 
-export function People({
-  user,
-  sessionUserFollowings,
-  revalidate_path,
-}: {
+type Prop = {
   user: User;
   sessionUserFollowings: Friendship[];
   revalidate_path: string;
-}) {
+};
+
+export function People({ user, sessionUserFollowings, revalidate_path }: Prop) {
   const isFollowed =
     sessionUserFollowings.filter((e) => e.user_to_be_followed_id === user.id)
       .length > 0;

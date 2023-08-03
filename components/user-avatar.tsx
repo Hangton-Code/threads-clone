@@ -17,6 +17,7 @@ export function UserAvatar({
           avatar_type,
           avatar_value,
         })}
+        referrerPolicy="no-referrer"
       />
       <AvatarFallback>CN</AvatarFallback>
     </Avatar>

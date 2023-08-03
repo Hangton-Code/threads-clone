@@ -1,5 +1,4 @@
-import { Thread } from "@prisma/client";
-import { Session } from "next-auth";
+import { Thread, User } from "@prisma/client";
 import { Dispatch, FormEvent, SetStateAction } from "react";
 
 const CLOUDINARY_CLOUD_NAME = process.env
@@ -12,7 +11,7 @@ export function useSubmit(
   attachment: File | null,
   setIsLoading: Dispatch<SetStateAction<boolean>>,
   setError: Dispatch<SetStateAction<string>>,
-  session: Session,
+  user: User,
   reply_to?: Thread
 ) {
   const handler = async (e: FormEvent<HTMLFormElement>) => {
@@ -63,7 +62,7 @@ export function useSubmit(
 
       if (reply_to)
         window.location.href = `${SITE_URL}/home/thread/${reply_to.id}`;
-      else window.location.href = `${SITE_URL}/home/profile/${session.user.id}`;
+      else window.location.href = `${SITE_URL}/home/profile/${user.id}`;
     } catch (e) {
       if (e instanceof Error) {
         setError(e.message);

@@ -5,13 +5,12 @@ import Image from "next/image";
 import { Dispatch, SetStateAction, useState, ChangeEvent, useRef } from "react";
 import { Button } from "../ui/button";
 
-export function AttachmentEditor({
-  setAttachment,
-  isLoading,
-}: {
+type Prop = {
   isLoading: boolean;
   setAttachment: Dispatch<SetStateAction<File | null>>;
-}) {
+};
+
+export function AttachmentEditor({ setAttachment, isLoading }: Prop) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [attachmentUrl, setAttachmentUrl] = useState<string | null>();
 

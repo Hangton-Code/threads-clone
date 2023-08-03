@@ -1,7 +1,6 @@
 "use client";
 
 import { Thread, User } from "@prisma/client";
-import { Session } from "next-auth";
 import {
   Dialog,
   DialogContent,
@@ -12,21 +11,21 @@ import {
 import { NewThreadForm } from "./new-thread/form";
 import { ReactNode } from "react";
 
-export function ReplyDialog({
-  thread,
-  session,
-  author,
-  trigger,
-  sessionUser,
-  triggerClassName,
-}: {
+type Prop = {
   thread: Thread;
-  session: Session;
   author: User;
   trigger: ReactNode;
   sessionUser: User;
   triggerClassName?: string;
-}) {
+};
+
+export function ReplyDialog({
+  thread,
+  author,
+  trigger,
+  sessionUser,
+  triggerClassName,
+}: Prop) {
   return (
     <Dialog>
       <DialogTrigger className={triggerClassName}>{trigger}</DialogTrigger>
@@ -41,7 +40,6 @@ export function ReplyDialog({
         </DialogHeader>
         <NewThreadForm
           reply_to={thread}
-          session={session}
           user={sessionUser}
           reply_to_author={author}
         />

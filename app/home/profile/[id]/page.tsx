@@ -6,13 +6,12 @@ import { Session, getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { Content } from "./content";
 
-export default async function ProfilePage({
-  params,
-  searchParams,
-}: {
+type Prop = {
   params: { id: string };
   searchParams: { tab: string };
-}) {
+};
+
+export default async function ProfilePage({ params, searchParams }: Prop) {
   // session
   const session = (await getServerSession(authOptions)) as Session;
   const sessionUser = await db.user.findFirstOrThrow({
@@ -45,11 +44,14 @@ export default async function ProfilePage({
       {/* profile */}
       <Profile user={dbUser} followers={dbUser.follower} />
       {/* button group */}
-      <ButtonGroup user={dbUser} session={session} isFollowing={isFollowing} />
+      <ButtonGroup
+        user={dbUser}
+        sessionUser={sessionUser}
+        isFollowing={isFollowing}
+      />
       {/* content */}
       <Content
         user={dbUser}
-        session={session}
         sessionUser={sessionUser}
         defaultTab={defaultTab}
       />

@@ -1,27 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { User } from "@prisma/client";
-import { Session } from "next-auth";
 import Link from "next/link";
 import { ShareDialog } from "@/components/share-dialog";
 import { followAction, unfollowAction } from "@/lib/followActions";
 
-export function ButtonGroup({
-  user,
-  session,
-  isFollowing,
-}: {
+type Prop = {
   user: User;
-  session: Session;
+  sessionUser: User;
   isFollowing: boolean;
-}) {
-  if (user.id === session.user.id) return <MyButtonGroup user={user} />;
-  return (
-    <OthersButtonGroup
-      user={user}
-      session={session}
-      isFollowing={isFollowing}
-    />
-  );
+};
+
+export function ButtonGroup({ user, sessionUser, isFollowing }: Prop) {
+  if (user.id === sessionUser.id) return <MyButtonGroup user={user} />;
+  return <OthersButtonGroup user={user} isFollowing={isFollowing} />;
 }
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL;
@@ -46,11 +37,9 @@ function MyButtonGroup({ user }: { user: User }) {
 
 async function OthersButtonGroup({
   user,
-  session,
   isFollowing,
 }: {
   user: User;
-  session: Session;
   isFollowing: boolean;
 }) {
   if (!isFollowing)

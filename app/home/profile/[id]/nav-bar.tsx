@@ -4,7 +4,12 @@ import { Session } from "next-auth";
 import { ShareDialog } from "@/components/share-dialog";
 import { BackButton } from "@/components/back-button";
 
-export function NavBar({ user, session }: { user: User; session: Session }) {
+type Prop = {
+  user: User;
+  session: Session;
+};
+
+export function NavBar({ user, session }: Prop) {
   if (user.id === session.user.id) return <MyNavBar />;
   return <OthersNavBar user={user} />;
 }
