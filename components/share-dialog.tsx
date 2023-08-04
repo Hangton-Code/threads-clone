@@ -28,7 +28,7 @@ export function ShareDialog({ trigger, url }: Prop) {
         <DialogHeader>
           <DialogTitle>Share</DialogTitle>
           <DialogDescription>
-            Share this wonderful thing to your friends!
+            Share this wonderful thing with your friends!
           </DialogDescription>
         </DialogHeader>
 

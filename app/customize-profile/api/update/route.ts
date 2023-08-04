@@ -27,6 +27,23 @@ export async function POST(request: Request) {
   // update names
   const session = await getServerSession(authOptions);
   if (!session) return NextResponse.json({}, { status: 401 });
+
+  const res = await db.user.findFirst({
+    where: {
+      id: {
+        not: {
+          equals: session.user.id,
+        },
+      },
+      user_name,
+    },
+  });
+  if (res)
+    return NextResponse.json(
+      { message: "This user name has been taken by others." },
+      { status: 400 }
+    );
+
   const dbUser = await db.user.update({
     where: {
       id: session.user.id,

@@ -35,7 +35,7 @@ export function useSubmit(
 
       // upload names & avatar
       if (!isAvatarChanged) {
-        await fetch("/customize-profile/api/update", {
+        const res = await fetch("/customize-profile/api/update", {
           method: "POST",
           body: JSON.stringify({
             display_name: displayName,
@@ -43,6 +43,9 @@ export function useSubmit(
             bio,
           }),
         });
+        if (!res.ok) {
+          throw new Error((await res.json()).message || "unknown server error");
+        }
       } else if (avatar instanceof File) {
         // upload to server & get signature for cloudinary
         const res = await fetch("/customize-profile/api/update", {
@@ -54,6 +57,10 @@ export function useSubmit(
             bio,
           }),
         });
+        if (!res.ok) {
+          throw new Error((await res.json()).message || "unknown server error");
+        }
+
         const resData = await res.json();
         const timestamp = resData.timestamp as string;
         const signature = resData.signature as string;
@@ -75,7 +82,7 @@ export function useSubmit(
           }
         );
       } else if (typeof avatar === "string") {
-        await fetch("/customize-profile/api/update", {
+        const res = await fetch("/customize-profile/api/update", {
           method: "POST",
           body: JSON.stringify({
             avatar_type: "url",
@@ -85,8 +92,11 @@ export function useSubmit(
             bio,
           }),
         });
+        if (!res.ok) {
+          throw new Error((await res.json()).message || "unknown server error");
+        }
       } else {
-        await fetch("/customize-profile/api/update", {
+        const res = await fetch("/customize-profile/api/update", {
           method: "POST",
           body: JSON.stringify({
             display_name: displayName,
@@ -95,12 +105,17 @@ export function useSubmit(
             bio,
           }),
         });
+        if (!res.ok) {
+          throw new Error((await res.json()).message || "unknown server error");
+        }
       }
 
       window.location.href = `${SITE_URL}/home/profile/${session.user.id}`;
     } catch (e) {
       if (e instanceof ZodError) {
         setError(`${e.errors[0].path}: ${e.errors[0].message}`);
+      } else if (e instanceof Error) {
+        setError(e.message || "unknown error");
       } else {
         setError("unknown error");
       }
