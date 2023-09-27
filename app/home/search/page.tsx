@@ -30,6 +30,7 @@ export default async function SearchPage() {
           <People
             key={i}
             user={user}
+            session={session}
             sessionUserFollowings={following}
             revalidate_path={revalidate_path}
           />

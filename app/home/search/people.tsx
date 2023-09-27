@@ -4,14 +4,21 @@ import { Friendship, User } from "@prisma/client";
 import Link from "next/link";
 import { followAction, unfollowAction } from "@/lib/followActions";
 import { UserAvatar } from "@/components/user-avatar";
+import { Session } from "next-auth";
 
 type Prop = {
   user: User;
   sessionUserFollowings: Friendship[];
   revalidate_path: string;
+  session: Session;
 };
 
-export function People({ user, sessionUserFollowings, revalidate_path }: Prop) {
+export function People({
+  user,
+  sessionUserFollowings,
+  revalidate_path,
+  session,
+}: Prop) {
   const isFollowed =
     sessionUserFollowings.filter((e) => e.user_to_be_followed_id === user.id)
       .length > 0;
@@ -34,38 +41,42 @@ export function People({ user, sessionUserFollowings, revalidate_path }: Prop) {
               </p>
             </div>
           </Link>
-          {!isFollowed ? (
-            <form action={followAction}>
-              <input
-                name="user_to_be_followed_id"
-                defaultValue={user.id}
-                className="hidden"
-              />
-              <input
-                name="revalidate_path"
-                defaultValue={revalidate_path}
-                className="hidden"
-              />
-              <Button variant={"outline"} className="w-24" type="submit">
-                Follow
-              </Button>
-            </form>
+          {session.user.id !== user.id ? (
+            !isFollowed ? (
+              <form action={followAction}>
+                <input
+                  name="user_to_be_followed_id"
+                  defaultValue={user.id}
+                  className="hidden"
+                />
+                <input
+                  name="revalidate_path"
+                  defaultValue={revalidate_path}
+                  className="hidden"
+                />
+                <Button variant={"outline"} className="w-24" type="submit">
+                  Follow
+                </Button>
+              </form>
+            ) : (
+              <form action={unfollowAction}>
+                <input
+                  name="user_to_be_unfollowed_id"
+                  defaultValue={user.id}
+                  className="hidden"
+                />
+                <input
+                  name="revalidate_path"
+                  defaultValue={revalidate_path}
+                  className="hidden"
+                />
+                <Button variant={"outline"} className="w-24" type="submit">
+                  Following
+                </Button>
+              </form>
+            )
           ) : (
-            <form action={unfollowAction}>
-              <input
-                name="user_to_be_unfollowed_id"
-                defaultValue={user.id}
-                className="hidden"
-              />
-              <input
-                name="revalidate_path"
-                defaultValue={revalidate_path}
-                className="hidden"
-              />
-              <Button variant={"outline"} className="w-24" type="submit">
-                Following
-              </Button>
-            </form>
+            <></>
           )}
         </div>
         <Separator className="mt-2" />

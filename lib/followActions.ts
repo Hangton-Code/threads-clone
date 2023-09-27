@@ -21,6 +21,11 @@ export async function followAction(data: FormData) {
   const session = await getServerSession(authOptions);
   if (!session) throw new Error("unauthenicated");
 
+  // check if the user wanted to follow him/herself
+  if (user_to_be_followed_id === session.user.id) {
+    throw new Error("disallowed to follow yourself");
+  }
+
   // find if already following
   const dbFriendShip = await db.friendship.findFirst({
     where: {
