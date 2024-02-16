@@ -1,6 +1,6 @@
 # Introduction
 
-This is clone application of Meta's new-released [Threads](https://www.threads.net/).
+This is a clone application of Meta's new-released [Threads](https://www.threads.net/).
 
 # Environment Variables
 
